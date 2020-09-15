@@ -1,4 +1,9 @@
 # IoT Build System
+Drill x number of holes, with a diameter of 3mm, every 10mm.
+
+### Rod dimensions:
+10x10mm 
+
 ### Stepper motor: *Wantai Stepper Motor 42BYGHW609*
 ![](https://www.my-home-fab.de/media/image/a9/58/49/x42BYGH609-dimensions.jpg.pagespeed.ic.m2-8Cp4AJ0.webp)
 <br>
