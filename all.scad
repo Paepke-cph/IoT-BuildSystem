@@ -8,6 +8,11 @@ x_rot = [1,0,0];
 y_rot = [0,1,0];
 z_rot = [0,0,1];
 
+// core
+core_length = MAX_LENGTH;
+core_width = 12 / 2;
+core_height = 60;
+
 // Stepper Motor
 sm_width = 40;
 sm_length = 43;
@@ -17,21 +22,16 @@ sm_mount_hole_d = 3;
 sm_mount_rails_dis = 15;
 
 // Motor mount
-mm_length = sm_length;
-mm_height = sm_height;
+mm_length = sm_length + 0;
+mm_height = sm_height; // = core_height;
 mm_width = 5;
-mm_axle_base_dim = 25;
+mm_axle_base_d = 23;
 mm_axle_base_depth = mm_width;
 
 // Motor mount rails
 mmr_length = 75;
 mmr_height = 4;
 mmr_top_offset = 5;
-
-// core
-core_length = MAX_LENGTH;
-core_width = 12;
-core_height = 60;
 
 // Ball Baring
 bb_inner_d = 6;
@@ -43,10 +43,10 @@ module core() {
 }
 
 // Parts to remove from core and mount.
-module ball_baring() {
+module ball_baring(bb_d) {
     color("red") {
         rotate(90,x_rot) {
-            cylinder(d=bb_outer_d, h=bb_width,center=AT_CENTER);
+            cylinder(d=bb_d, h=bb_width,center=AT_CENTER);
         }
     }
 }
@@ -59,18 +59,18 @@ module motor_mount_rail(scale) {
 }
 
 
-module ball_barings() {
+module ball_barings(bb_d) {
     translate([-core_length/2+bb_outer_d,0,0]) {
         translate([0,bb_width/2,0])
-            ball_baring();
+            ball_baring(bb_d);
         translate([0,-bb_width/2,0])
-            ball_baring();
+            ball_baring(bb_d);
     }
     translate([core_length/2-bb_outer_d,0,0]){
         translate([0,bb_width/2,0])
-            ball_baring();
+            ball_baring(bb_d);
         translate([0,-bb_width/2,0])
-            ball_baring();
+            ball_baring(bb_d);
     }
 }
 
@@ -90,20 +90,51 @@ module motor_mount_holes() {
     color("blue") {
         rotate(90, x_rot) {
         translate([0,0,-mm_width/2]) {
-            translate([-(mm_length/2)+6,0,0]) {
-                translate([0,(mm_height/2)-6,0])
+            // Left side holes
+            translate([-(sm_length/2)+6,0,0]) {
+                translate([0,(sm_height/2)-6,0])
                     cylinder(d=sm_mount_hole_d, h=mm_width);
-                translate([0,-(mm_height/2)+6,0])
+                translate([0,-(sm_height/2)+6,0])
                     cylinder(d=sm_mount_hole_d, h=mm_width);
+                // Extra
+                // translate([-10 ,(sm_height/2)-6,0])
+                //     cylinder(d=sm_mount_hole_d, h=mm_width);
+                // translate([-10 ,-(sm_height/2)+6,0])
+                //     cylinder(d=sm_mount_hole_d, h=mm_width);
             }
-            translate([(mm_length/2)-6,0,0]) {
-                translate([0,(mm_height/2)-6,0])
+            // Right side holes
+            translate([(sm_length/2)-6,0,0]) {
+                translate([0,(sm_height/2)-6,0])
                     cylinder(d=sm_mount_hole_d, h=mm_width);
-                translate([0,-(mm_height/2)+6,0])
+                translate([0,-(sm_height/2)+6,0])
                     cylinder(d=sm_mount_hole_d, h=mm_width);
+                // Extra
+                // translate([10,(sm_height/2)-6,0])
+                //     cylinder(d=sm_mount_hole_d, h=mm_width);
+                // translate([10,-(sm_height/2)+6,0])
+                //     cylinder(d=sm_mount_hole_d, h=mm_width);
                 }
             }
         }
+    }
+}
+
+module core_join_holes(bb_d){
+    translate([-(core_length/2)+bb_outer_d,-bb_d,(core_height/2)-10]) {
+        translate([0,bb_width/2,0])
+            ball_baring(bb_d);
+    }
+    translate([-(core_length/2)+bb_outer_d,-bb_d,-(core_height/2)+10]) {
+        translate([0,bb_width/2,0])
+            ball_baring(bb_d);
+    }
+    translate([(core_length/2)-bb_outer_d,-bb_d,-(core_height/2)+10]){
+        translate([0,bb_width/2,0])
+            ball_baring(bb_d);
+    }
+    translate([(core_length/2)-bb_outer_d,-bb_d,(core_height/2)-10]){
+        translate([0,bb_width/2,0])
+            ball_baring(bb_d);
     }
 }
 
@@ -111,8 +142,9 @@ module motor_mount_holes() {
 module core_drilled_out() {
     difference() {
         core();
-        ball_barings();
+        ball_barings(bb_outer_d);
         motor_mount_rails();
+        core_join_holes(3);
     }
 }
 
@@ -125,7 +157,7 @@ module motor_mount_drill_out() {
                 motor_mount_holes();
                 rotate(90,x_rot)
                     translate([0,0,-mm_width/2])
-                        cylinder(d=mm_axle_base_dim, h=mm_axle_base_depth);
+                        cylinder(d=mm_axle_base_d, h=mm_axle_base_depth);
             }
         }
     }
