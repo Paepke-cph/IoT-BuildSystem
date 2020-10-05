@@ -1,4 +1,5 @@
 use <dc_motor.scad>
+use <Gears.scad>
 
 $fn=50;
 
@@ -9,8 +10,8 @@ wall_width=10;
 
 difference() {
   minkowski() {
-    cube(size=[buggy_width, buggy_length, 50], center=true);
-    // sphere(r=1);
+    cube(size=[buggy_width, buggy_length, 40], center=true);
+    sphere(r=1);
   }
     // Chop off top
     translate([0, 0, buggy_height]) cube(size=[buggy_width + 10, buggy_length + 10, buggy_height+10], center=true);
@@ -27,9 +28,21 @@ difference() {
       square(size=[buggy_width-wall_width+5, buggy_length-wall_width+5], center=true);
     }
   }
+
+  translate([0, 30, -5]) {
+    rotate([0, 90, 0]) {
+      drive_axle();
+    }
+  }
+
+  translate([0, -30, -5]) {
+    rotate([0, 90, 0]) {
+      drive_axle();
+    }
+  }
 }
 
-translate([0, 10, -10]) {
+translate([0, 0, -10]) {
   dc_enginge_mount();
 }
 
@@ -47,4 +60,8 @@ module dc_enginge_mount() {
         hobby_dc_motor();
       }
     }
+}
+
+module drive_axle() {
+  cylinder(r=3, h=100, center=true);
 }
