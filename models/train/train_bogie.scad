@@ -10,7 +10,7 @@ wall_width=10;
 
 difference() {
   minkowski() {
-    cube(size=[buggy_width, buggy_length, 40], center=true);
+    cube(size=[buggy_width, buggy_length, buggy_height], center=true);
     sphere(r=1);
   }
     // Chop off top
@@ -37,8 +37,22 @@ difference() {
     drive_axle();
   }
 }
+// Screw Fillets
+translate([18, 43, -5]) {
+  screw_pole();
+  translate([-36, 0, 0]) {
+    screw_pole();
+    translate([0, -86, 0]) {
+      screw_pole();
+    }
+  }
+  translate([0, -86, 0]) {
+    screw_pole();
+  }
+}
 
-translate([105, 0, -10]) {
+// Motor mount
+translate([0, 0, -10]) {
   dc_enginge_mount();
 }
 
@@ -54,7 +68,14 @@ module dc_enginge_mount() {
         hobby_dc_motor();
       }
     }
+    translate([15, 0, 0]) {
+      cylinder(r=3, h=20, center=true);
+    }
+    translate([-15, 0, 0]) {
+      cylinder(r=3, h=20, center=true);
+    }
   }
+
   translate([0, -15, 5]) {
       rotate([0, 0, 90]) {
         hobby_dc_motor();
@@ -64,13 +85,19 @@ module dc_enginge_mount() {
 
 module drive_axle() {
   rotate([0, 90, 0]) {
-    cylinder(r=3, h=70, center=true);
+    cylinder(r=9.5, h=70, center=true);
   }
 
 }
 
-module gr_1(n=0,thk=0){
+module screw_pole() {
+  difference() {
+    cube(size=[5, 5, 30], center=true);
+    cylinder(r=1.5, h=45, center=true);
+  }
+}
 
+module gr_1(n=0,thk=0){
     r = n*1.5;
 
 module tooth(){
