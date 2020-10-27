@@ -23,8 +23,8 @@ difference() {
     //sphere(r=1);
   }
 
-  translate([0,0,10]) {
-    linear_extrude(height=50) {
+  translate([0,0,10]) {10
+    linear_extrude(height=10) {
       square(size=[buggy_width-wall_width+5, buggy_length-wall_width+5], center=true);
     }
   }
