@@ -1,11 +1,12 @@
 use <dc_motor.scad>
+use <dc_motor_mount.scad>
 use <Gears.scad>
 
 $fn=50;
 
 buggy_width=50;
 buggy_length=100;
-buggy_height=40;
+buggy_height=50;
 wall_width=10;
 
 difference() {
@@ -19,14 +20,16 @@ difference() {
 
   // Hollow inside
   minkowski() {
-    cube(size=[buggy_width-wall_width, buggy_length-wall_width, buggy_height-wall_width], center=true);
+    cube(size=[buggy_width-wall_width, buggy_length-wall_width, buggy_height-wall_width+10], center=true);
     //sphere(r=1);
   }
 
-  translate([0,0,10]) {10
-    linear_extrude(height=10) {
-      square(size=[buggy_width-wall_width+5, buggy_length-wall_width+5], center=true);
-    }
+  translate([0,0,20]) {
+    cube(size=[buggy_width-wall_width+5, buggy_length-wall_width+5, 10], center=true);
+
+    // linear_extrude(height=20) {
+    //   square(size=[buggy_width-wall_width+5, buggy_length-wall_width+5], center=true);
+    // }
   }
 
   translate([0, 30, -5]) {
@@ -37,23 +40,13 @@ difference() {
     drive_axle();
   }
 }
-// Screw Fillets
-translate([18, 43, -5]) {
-  screw_pole();
-  translate([-36, 0, 0]) {
-    screw_pole();
-    translate([0, -86, 0]) {
-      screw_pole();
-    }
-  }
-  translate([0, -86, 0]) {
-    screw_pole();
-  }
-}
 
 // Motor mount
-translate([0, 0, -10]) {
-  dc_enginge_mount();
+translate([-20, 10, 15]) {
+  rotate([90, 90, 0]) {
+    motor_mount();
+  }
+  //dc_enginge_mount();
 }
 
 translate([-100, 0, 0]) {
