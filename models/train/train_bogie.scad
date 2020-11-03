@@ -6,7 +6,7 @@ $fn=50;
 
 buggy_width=50;
 buggy_length=100;
-buggy_height=50;
+buggy_height=45;
 wall_width=10;
 
 difference() {
@@ -17,32 +17,28 @@ difference() {
     // Chop off top
     translate([0, 0, buggy_height]) cube(size=[buggy_width + 10, buggy_length + 10, buggy_height+10], center=true);
 
-
-  // Hollow inside
-  minkowski() {
+    // Hollow
     cube(size=[buggy_width-wall_width, buggy_length-wall_width, buggy_height-wall_width+10], center=true);
-    //sphere(r=1);
-  }
 
-  translate([0,0,20]) {
-    cube(size=[buggy_width-wall_width+5, buggy_length-wall_width+5, 10], center=true);
+    translate([0,0,20]) {
+      cube(size=[buggy_width-wall_width+6, buggy_length-wall_width+6, 15], center=true);
 
     // linear_extrude(height=20) {
     //   square(size=[buggy_width-wall_width+5, buggy_length-wall_width+5], center=true);
     // }
-  }
+    }
 
-  translate([0, 30, -5]) {
-    drive_axle();
-  }
+    translate([0, 30, -5]) {
+      drive_axle();
+    }
 
-  translate([0, -30, -5]) {
-    drive_axle();
+    translate([0, -30, -5]) {
+      drive_axle();
   }
 }
 
 // Motor mount
-translate([-20, 10, 15]) {
+translate([-20, 10, 10]) {
   rotate([90, 90, 0]) {
     motor_mount();
   }
@@ -78,7 +74,7 @@ module dc_enginge_mount() {
 
 module drive_axle() {
   rotate([0, 90, 0]) {
-    cylinder(r=9.5, h=70, center=true);
+    cylinder(r=10, h=70, center=true);
   }
 
 }
