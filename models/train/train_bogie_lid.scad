@@ -12,10 +12,10 @@ $fn = 64;
 module bogie_lid() {
   difference() {
     difference() {
-      cylinder(tut_height, tut_radius, tut_radius);
+      cylinder(h=tut_height, r1= tut_radius, r2=tut_radius);
       cube(size=[20,2,21], center=true);
  }
-  cylinder(tut_height+1, tut_radius-2, tut_radius-2);
+  cylinder(h=tut_height+1, r1=tut_radius-2, r2=tut_radius-2);
  }
   cube(size=[buggy_width-wall_width+5, buggy_length-wall_width+5, square_height], center=true);
   translate([0,0,lid_height]){ 
