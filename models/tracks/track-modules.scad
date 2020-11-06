@@ -37,3 +37,36 @@ module v3SignalRail(base_length) {
         }
     }
 }
+
+function v2sinePts(xs=[0:200],xd=100,n=1,h=0.5,base=0,z=0)=
+(
+    [ for(x=xs) [
+        x / xd,
+        h * sin(x / n) + base,
+        z ]
+    ]
+);
+module v2SineEdgePlate(length) {
+    function to2d(pts)=[for(p=pts)[p[0],p[1]]];
+    pts = concat(
+        [[length,0], [0,0]],
+        to2d(v2sinePts(h=1))
+    );
+    polygon(pts);
+}
+
+
+SineEdgePlate(150);
+
+
+// rotate(90,[1,0,0]) {
+//     v2SineEdgePlate(2);
+// }
+// difference() {
+//     cube([10,1,1],center=false);
+//     translate([0, 0.5, 0]) {
+//         rotate(90,[1,0,0]) {
+//             v2SineEdgePlate(2);
+//         }
+//     }
+// }
