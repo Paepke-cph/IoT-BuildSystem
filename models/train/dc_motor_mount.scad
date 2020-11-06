@@ -1,10 +1,10 @@
-motor_diameter = 24.4;
+motor_diameter = 25;
 motor_height = 30.8;
-motor_shaft_d = 6.4;
+motor_shaft_d = 7;
 motor_shaft_length = 12;
 
-bogie_width=50;
-bogie_height=40;
+bogie_width=50-10;
+bogie_height=40-10;
 
 motor_mount_thickness=motor_height/2;
 
