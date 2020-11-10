@@ -1,3 +1,13 @@
+include <Gears.scad>
+
+bevel_gear_pair(modul=1, gear_teeth=30, pinion_teeth=11, axis_angle=100, tooth_width=5, gear_bore=4, pinion_bore=2, pressure_angle = 20, helix_angle=20, together_built=false);
+
+translate([-30, 0, 40]) {
+   rotate([0, 90, 0]) {
+        Axel3Print(8.4, 80, 0.2);
+   }
+}
+
 /*  Bevel Gear Pair with any axis_angle; uses the Module "bevel_gear"
     modul = Height of the Tooth Tip over the Partial Cone; Specification for the Outside of the Cone
     gear_teeth = Number of Gear Teeth on the Gear
@@ -40,7 +50,15 @@ module bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90, tooth_wid
     // Drawing
     // Rad
     rotate([0,0,180*(1-clearance)/gear_teeth*rotate])
+    difference() {
         bevel_gear(modul, gear_teeth, delta_gear, tooth_width, gear_bore, pressure_angle, helix_angle);
+        rotate([0, 90, 0]) {
+            translate([0, 0, -4]) {
+                Axel3Print(9.4, 20, 0.2);
+            }
+        }
+
+    }
 
     // Ritzel
     if (together_built)
@@ -52,4 +70,27 @@ module bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90, tooth_wid
             bevel_gear(modul, pinion_teeth, delta_pinion, tooth_width, pinion_bore, pressure_angle, -helix_angle);
  }
 
-bevel_gear_pair(modul=1, gear_teeth=30, pinion_teeth=11, axis_angle=100, tooth_width=5, gear_bore=4, pinion_bore=2, pressure_angle = 20, helix_angle=20, together_built=false);
+module Axel3Print(diameter, length, fitting)
+{
+    translate([0,0,(diameter*0.85-2*fitting)*0.5])
+    rotate([0,90,0])
+    #Axel3(diameter, length, fitting);
+}
+
+module Axel3(diameter, length, fitting)
+{
+    difference()
+    {
+        intersection()
+        {
+            cube([diameter*0.85-2*fitting,diameter*0.85-2*fitting,length], center=true);
+            cylinder(d=diameter-2*fitting,h=length, $fn=128, center=true);
+        }
+        for(i=[0:3])
+        {
+            rotate([0,0,i*90])
+            translate([0,(diameter-0.5*fitting)*0.50,0])
+            cylinder(d=diameter*0.35+0.5*fitting, h=length+1, $fn=32, center=true);
+        }
+    }
+}
