@@ -876,7 +876,15 @@ module bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90, tooth_wid
     // Drawing
     // Rad
     rotate([0,0,180*(1-clearance)/gear_teeth*rotate])
+    difference() {
         bevel_gear(modul, gear_teeth, delta_gear, tooth_width, gear_bore, pressure_angle, helix_angle);
+        rotate([0, 90, 0]) {
+        translate([0, 0, -3.5]) {
+            Axel3Print(8.4, 20, 0.2);
+    }
+}
+
+    }
 
     // Ritzel
     if (together_built)
@@ -1054,6 +1062,38 @@ module worm_gear(modul, tooth_number, thread_starts, width, length, worm_bore, g
         if(show_spur)
         translate([-2*r_gear,0,0])
             spur_gear (modul, tooth_number, width, gear_bore, pressure_angle, -lead_angle, optimized);
+    }
+}
+
+translate([-30, 0, 40]) {
+   rotate([0, 90, 0]) {
+        Axel3Print(8.4, 80, 0.2);
+   }
+}
+
+
+module Axel3Print(diameter, length, fitting)
+{
+    translate([0,0,(diameter*0.85-2*fitting)*0.5])
+    rotate([0,90,0])
+    Axel3(diameter, length, fitting);
+}
+
+module Axel3(diameter, length, fitting)
+{
+    difference()
+    {
+        intersection()
+        {
+            cube([diameter*0.85-2*fitting,diameter*0.85-2*fitting,length], center=true);
+            cylinder(d=diameter-2*fitting,h=length, $fn=128, center=true);
+        }
+        for(i=[0:3])
+        {
+            rotate([0,0,i*90])
+            translate([0,(diameter-0.5*fitting)*0.50,0])
+            cylinder(d=diameter*0.35+0.5*fitting, h=length+1, $fn=32, center=true);
+        }
     }
 }
 
