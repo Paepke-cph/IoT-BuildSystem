@@ -34,12 +34,7 @@ module train() {
            rotate([180,0,0]) cylinder(h=1.2, r1=9.5, r2=9.5);
        }
       }    
-    // making room for  ball bearing
-   //difference() {
-   //translate([(trainLength/2)-(buggy_length/2+0.5),0,-12])
-    //    cylinder(h=2, r1=9.5, r2=9.5); 
-  // }
-   
+
    // train side 1
  translate([0, ((trainWidth/2)-adjust), trainHeight/2])
  rotate([90,0,0]) cube([trainLength,trainWidth,wallThickness], center=true);
@@ -57,10 +52,10 @@ module train() {
  difference() {   
    translate([(trainLength/2)-adjust, 0, trainHeight/2])
         rotate([0, 0, 90]) cube([trainWidth,wallThickness,trainHeight], center=true);
-      translate([(trainLength/2-6)-adjust, 15, trainHeight/2-40])
-         cube([20,20,15]);
+      translate([(trainLength/2-6)-adjust, -2, trainHeight/2-40])
+         cube([12,12,12]);
         translate([(trainLength/2-6)-adjust, -35, trainHeight/2-40])
-         cube([20,20,15]);
+         cube([13,13,13]);
 }
 
 }
