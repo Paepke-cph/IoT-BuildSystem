@@ -24,16 +24,14 @@ module SineEdgePlate(base_length)
    polygon( pts );
 }
 
-module v3SignalRail(base_length) {
+module v3SignalRail(base_length,at_center) {
     difference() {
-        color("green") {
-            rotate(90,[1,0,0]) {
-                linear_extrude(height=5, center=true)
-                    SineEdgePlate(base_length);
-            }
+        rotate(90,[1,0,0]) {
+            linear_extrude(height=5, center=at_center)
+                SineEdgePlate(base_length);
         }
         translate([base_length+5,0,5]) {
-            cube([10,10,10],center=true);
+            cube([10,10,10],center=at_center);
         }
     }
 }
@@ -54,19 +52,3 @@ module v2SineEdgePlate(length) {
     );
     polygon(pts);
 }
-
-
-SineEdgePlate(150);
-
-
-// rotate(90,[1,0,0]) {
-//     v2SineEdgePlate(2);
-// }
-// difference() {
-//     cube([10,1,1],center=false);
-//     translate([0, 0.5, 0]) {
-//         rotate(90,[1,0,0]) {
-//             v2SineEdgePlate(2);
-//         }
-//     }
-// }

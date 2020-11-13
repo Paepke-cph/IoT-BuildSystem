@@ -1,39 +1,36 @@
 use <dc_motor.scad>
 use <dc_motor_mount.scad>
 use <Gears.scad>
-
-$fn=50;
-
-buggy_width=50;
-buggy_length=100;
-buggy_height=45;
-wall_width=10;
-
-difference() {
-  minkowski() {
-    cube(size=[buggy_width, buggy_length, buggy_height], center=true);
-    sphere(r=1);
-  }
-    // Chop off top
-    translate([0, 0, buggy_height]) cube(size=[buggy_width + 10, buggy_length + 10, buggy_height+10], center=true);
-
-    // Hollow
-    cube(size=[buggy_width-wall_width, buggy_length-wall_width, buggy_height-wall_width+10], center=true);
-
-    translate([0,0,20]) {
-      cube(size=[buggy_width-wall_width+6, buggy_length-wall_width+6, 15], center=true);
-
-    // linear_extrude(height=20) {
-    //   square(size=[buggy_width-wall_width+5, buggy_length-wall_width+5], center=true);
-    // }
+/*
+bogie_width,
+bogie_length,
+bogie_height,
+bogie_wall_width,
+at_center
+*/
+module motor_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_center) {
+  difference() {
+    minkowski() {
+      cube([bogie_width, bogie_length, bogie_height], center=at_center);
+      sphere(r=1);
     }
+      // Chop off top
+      translate([0, 0, bogie_height]) cube([bogie_width + 10, bogie_length + 10, bogie_height+10], center=at_center);
 
-    translate([0, 30, -5]) {
-      drive_axle();
+      // Hollow
+      cube([bogie_width-bogie_wall_width, bogie_length-bogie_wall_width, bogie_height-bogie_wall_width+10], center=at_center);
+
+      translate([0,0,20]) {
+        cube([bogie_width-bogie_wall_width+6, bogie_length-bogie_wall_width+6, 15], center=at_center);
+      }
+
+      translate([0, 30, -5]) {
+        drive_axle();
+      }
+
+      translate([0, -30, -5]) {
+        drive_axle();
     }
-
-    translate([0, -30, -5]) {
-      drive_axle();
   }
 }
 
@@ -51,7 +48,7 @@ translate([-100, 0, 0]) {
 
 module dc_enginge_mount() {
   difference() {
-    cube(size=[buggy_width, 20, 15], center=true);
+    cube(size=[bogie_width, 20, 15], center=true);
     translate([0, -15, 5]) {
       rotate([0, 0, 90]) {
         hobby_dc_motor();
