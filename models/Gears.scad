@@ -1,6 +1,7 @@
 $fn = 50;
 use <IoT_E2020\BuildingSystem\WorkInProgress\Part_Generation\Gears\Gears.scad>
-/* Library for Involute Gears, Screws and Racks
+/*
+Library for Involute Gears, Screws and Racks
 This library contains the following modules
 - rack(modul, length, height, width, pressure_angle=20, helix_angle=0)
 - mountable_rack(modul, length, height, width, pressure_angle=20, helix_angle=0, fastners, profile, head)
@@ -472,6 +473,16 @@ module herringbone_gear(modul, tooth_number, width, bore, pressure_angle = 20, h
     }
 }
 
+module train_wheel(modul, tooth_number, width, bore,
+                    pressure_angle, helix_angle, optimized,
+                    axel_diameter,axel_length,axel_fitting){
+
+        difference() {
+            herringbone_gear(modul, tooth_number, width, bore, pressure_angle, helix_angle, optimized);
+            Axel3(axel_diameter,axel_length,axel_fitting);
+        }
+}
+
 /*  Rack and Pinion
     modul = Height of the Tooth Tip beyond the Pitch Circle
     rack_length = Length of the Rack
@@ -835,7 +846,10 @@ module spiral_bevel_gear(modul, tooth_number, partial_cone_angle, tooth_width, b
 }
 
 
-module axel_bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90, tooth_width, gear_bore, pinion_bore, pressure_angle=20, helix_angle=0, together_built=true){
+module axel_bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90,
+                            tooth_width, gear_bore, pinion_bore, pressure_angle=20,
+                             helix_angle=0, together_built=true,
+                             axel_diameter,axel_length,axel_fitting){
 
     // Dimension Calculations
     r_gear = modul*gear_teeth/2;                           // Cone Radius of the Gear
@@ -870,7 +884,7 @@ module axel_bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90, toot
         bevel_gear(modul, gear_teeth, delta_gear, tooth_width, gear_bore, pressure_angle, helix_angle);
         rotate([0, 90, 0]) {
             translate([0, 0, -4]) {
-                Axel3Print(9.4, 20, 0.2);
+                Axel3Print(axel_diameter,axel_length,axel_fitting);
             }
         }
 

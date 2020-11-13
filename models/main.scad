@@ -29,18 +29,15 @@ motor_gear_helix_angle = 0;
 motor_gear_together_built=true;
 
 // WHEELS
-wheel_modul = 1;
-wheel_gear_teeth = 30;
-wheel_pinion_teeth = 11;
-wheel_axis_angle = 90;
-wheel_tooth_width = 5;
-wheel_gear_bore = 0;
-wheel_pinion_bore = 2;
-wheel_pressure_angle = 20;
-wheel_helix_angle = 0;
+train_wheel_teeth = 40;
+train_wheel_width = 5;
+train_wheel_bore = -40;
+train_wheel_pressure_angle = 20;
+train_wheel_helix_angle = 0;
+train_wheel_optimized = true;
 
 // AXELS
-axel_diameter = 8.4;
+axel_diameter = 9.4;
 axel_length = 80;
 axel_fitting = 0.2;
 
@@ -72,7 +69,6 @@ train_height = 120;
 train_wall_thickness = 10;
 train_bottom_thickness = train_wall_thickness;
 
-
 // TRACK
 track_rail_helix_angle = 0.0;
 track_rail_pressure_angle = 20;
@@ -88,15 +84,16 @@ $fn = 64;
 //* ============================================
 //* RENDERING TOGGLE
 //* ============================================
-draw_axel = true;
+draw_axel = false;
 draw_motor_gear = false;
 draw_motor_mount = false;
 draw_motor_bogie = false;
 draw_bogie_lid = false;
 draw_train = false;
 draw_train_lid = false;
-draw_tracks = false;
+draw_train_wheel = true;
 
+draw_tracks = false;
 if(draw_axel)
 {
     Axel3Print(
@@ -118,7 +115,10 @@ if(draw_motor_gear)
         motor_gear_pinion_bore,
         motor_gear_pressure_angle,
         motor_gear_helix_angle,
-        motor_gear_together_built
+        motor_gear_together_built,
+        axel_diameter,
+        axel_length,
+        axel_fitting
         );
 }
 
@@ -195,6 +195,23 @@ if(draw_train_lid)
         train_wall_thickness,
         true
     );
+}
+
+if(draw_train_wheel) 
+{
+    
+    train_wheel(
+        wheels_and_tracks_modul,
+        train_wheel_teeth, 
+        train_wheel_width, 
+        train_wheel_bore, 
+        train_wheel_pressure_angle, 
+        train_wheel_helix_angle, 
+        train_wheel_optimized,
+        axel_diameter,
+        axel_length,
+        axel_fitting
+        );
 }
 
 if(draw_tracks)
