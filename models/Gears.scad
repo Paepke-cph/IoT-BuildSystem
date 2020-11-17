@@ -883,7 +883,7 @@ module axel_bevel_gear_pair(modul, gear_teeth, pinion_teeth, axis_angle=90,
     difference() {
         bevel_gear(modul, gear_teeth, delta_gear, tooth_width, gear_bore, pressure_angle, helix_angle);
         rotate([0, 90, 0]) {
-            translate([0, 0, -4]) {
+            translate([0, 0, -2.4]) {
                 Axel3Print(axel_diameter,axel_length,axel_fitting);
             }
         }

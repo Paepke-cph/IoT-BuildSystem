@@ -49,8 +49,9 @@ module female_connector(track_length,track_height,mc_width,mc_length,mc_height,f
 }
 
 module track(track_width,track_length,track_height,
-            wheel_axel_width,modul,rail_helix_angle,rail_pressure_angle,
-            rail_width,rail_height,at_center) {
+            wheel_axel_width,modul,rail_helix_angle,
+            rail_pressure_angle,rail_width,rail_height,
+            data_rail_diameter, at_center) {
     
     rail_length = track_length;
     mc_length = 15;
@@ -66,8 +67,8 @@ module track(track_width,track_length,track_height,
                 v3SignalRail(track_length,at_center);
             }
         }
-        mountHoles(3, track_length, 15, 10, 5, 0);
-        mountHoles(3, track_length, -15, 10, 5, 0);
+        mountHoles(3, track_length, 15, 10, data_rail_diameter, 0);
+        mountHoles(3, track_length, -15, 10, data_rail_diameter, 0);
         female_connector(track_length,track_height,mc_width,mc_length,mc_height,-15,at_center);
         female_connector(track_length,track_height,mc_width,mc_length,mc_height,15,at_center);
     }    
