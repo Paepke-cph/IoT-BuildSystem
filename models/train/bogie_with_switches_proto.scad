@@ -8,7 +8,7 @@ bogie_length = 100;
 bogie_height = 45; // 50
 bogie_wall_width = 10;
 
-module motor_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_center) {
+module switch_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_center) {
   difference() {
     minkowski() {
       cube([bogie_width, bogie_length, bogie_height+5], center=at_center);
@@ -144,13 +144,13 @@ module gear_axle() {
 
 
 
-    motor_bogie(
-        bogie_width,
-        bogie_length,
-        bogie_height,
-        bogie_wall_width,
-        true
-        );
+    // switch_bogie(
+    //     bogie_width,
+    //     bogie_length,
+    //     bogie_height,
+    //     bogie_wall_width,
+    //     true
+    //     );
 
 
 

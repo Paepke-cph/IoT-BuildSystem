@@ -8,6 +8,7 @@ use <train\train_bogie.scad>
 use <train\train_bogie_lid.scad>
 use <train\trainprototype.scad>
 use <train\train_lid.scad>
+use <train\bogie_with_switches_proto.scad>
 use <tracks\tracks.scad>
 
 //* ============================================
@@ -91,7 +92,7 @@ $fn = 64;
 draw_axel = false;
 axel_translation = [0,0,0];
 
-draw_motor_gear = true;
+draw_motor_gear = false;
 motor_gear_translation = [0,0,0];
 
 draw_motor_mount = false;
@@ -99,6 +100,9 @@ motor_mount_translation = [0,0,0];
 
 draw_motor_bogie = false;
 motor_bogie_translation = [0,0,0];
+
+draw_switch_bogie = true;
+switch_bogie_translation = [0,0,0];
 
 draw_bogie_lid = false;
 bogie_lid_translation = [0,0,0];
@@ -179,6 +183,19 @@ if(draw_motor_bogie)
             );
     }
     echo("Motor Bogie rendered");
+}
+
+if(draw_switch_bogie)
+{
+    translate(switch_bogie_translation) {
+        switch_bogie(
+            bogie_width,
+            bogie_length,
+            bogie_height,
+            bogie_wall_width,
+            true
+            );
+    }
 }
 
 if(draw_bogie_lid) 
