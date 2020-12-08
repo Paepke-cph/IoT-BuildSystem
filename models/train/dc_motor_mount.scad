@@ -20,21 +20,28 @@ module motor_mount(motor_diameter,motor_height,motor_shaft_d,motor_shaft_length,
         cylinder(d=motor_shaft_d, h=motor_shaft_length, center=at_center);
       }
       translate([0, 8.5, -1]) {
-        cylinder(d=2.5, h=20, center=at_center);
+        cylinder(d=3, h=20, center=at_center);
+      }
+      translate([0, 8.5, 0]) {
+        cylinder(d=5.7, h=3, center=at_center);
       }
       translate([0, -8.5, -1]) {
-        cylinder(d=2.5, h=20, center=at_center);
+        cylinder(d=3, h=20, center=at_center);
       }
-      translate([0, 18, motor_mount_thickness/2]) {
-        rotate([0, 90, 0]) {
-          cylinder(d=3, h=50, center=!at_center);
-        }
+      translate([0, -8.5, 0]) {
+        cylinder(d=5.7, h=3, center=at_center);
       }
-      translate([0, -18, motor_mount_thickness/2]) {
-        rotate([0, 90, 0]) {
-          cylinder(d=3, h=50, center=!at_center);
-        }
-      }
+
+      // translate([0, 18, motor_mount_thickness/2]) {
+      //   rotate([0, 90, 0]) {
+      //     cylinder(d=3, h=50, center=!at_center);
+      //   }
+      // }
+      // translate([0, -18, motor_mount_thickness/2]) {
+      //   rotate([0, 90, 0]) {
+      //     cylinder(d=3, h=50, center=!at_center);
+      //   }
+      // }
     }
   }
 }

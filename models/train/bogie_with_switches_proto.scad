@@ -3,12 +3,7 @@
 use <dc_motor_mount.scad>
 use <Gears.scad>
 
-bogie_width = 50; // 60
-bogie_length = 100;
-bogie_height = 45; // 50
-bogie_wall_width = 10;
-
-module switch_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_center) {
+module switch_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_center,wheel_axel_distance) {
   difference() {
     minkowski() {
       cube([bogie_width, bogie_length, bogie_height+5], center=at_center);
@@ -28,12 +23,12 @@ module switch_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_ce
      
      // making room for switch mounts 
       translate([0,5,-bogie_height/2]){ 
-         rotate([90,0,90])   cylinder(r=2, h=40, center=at_center, $fn=128);
+         rotate([90,0,90])   cylinder(r=2, h=75, center=at_center, $fn=128);
      }
      
           // making room for switch mounts 
       translate([0,-5,-bogie_height/2]){ 
-         rotate([90,0,90])   cylinder(r=2, h=40, center=at_center, $fn=128);
+         rotate([90,0,90])   cylinder(r=2, h=75, center=at_center, $fn=128);
      }
      
       // Chop off top
@@ -46,11 +41,11 @@ module switch_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,at_ce
         cube([bogie_width-bogie_wall_width+6, bogie_length-bogie_wall_width+6, 15], center=at_center);
       }
 
-      translate([0, 30, -5]) {
+      translate([0, wheel_axel_distance, -5]) {
         drive_axle();
       }
 
-      translate([0, -30, -5]) {
+      translate([0, -wheel_axel_distance, -5]) {
         drive_axle();
     }
   }
@@ -94,7 +89,7 @@ module dc_enginge_mount() {
 
 module drive_axle() {
   rotate([0, 90, 0]) {
-    cylinder(r=10, h=70, center=true);
+    cylinder(d=19, h=70, center=true);
   }
 
 }

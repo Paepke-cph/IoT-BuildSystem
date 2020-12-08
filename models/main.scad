@@ -30,9 +30,9 @@ motor_gear_helix_angle = 0;
 motor_gear_together_built=false;
 
 // WHEELS
-train_wheel_teeth = 40;
-train_wheel_width = 5;
-train_wheel_bore = -40;
+train_wheel_teeth = 55;
+train_wheel_width = 6;
+train_wheel_bore = -55;
 train_wheel_pressure_angle = 20;
 train_wheel_helix_angle = 0;
 train_wheel_axel_width = 70;
@@ -54,9 +54,10 @@ motor_mount_thickness=motor_height/2;
 
 // BOGIE
 bogie_width = 50; // 60
-bogie_length = 100;
+bogie_length = 125;
 bogie_height = 45; // 50
 bogie_wall_width = 10;
+bogie_wheel_axel_distance = 40;
 
 // LID
 lid_square_height = 5;
@@ -67,10 +68,10 @@ lid_connector_radius_inner = 2;
 lid_connector_depth = 15;
 
 // TRAIN
-train_length = 210;
-train_width = 120;
-train_height = 120;
-train_wall_thickness = 10;
+train_length = 180;
+train_width = 60;
+train_height = 20;
+train_wall_thickness = 5;
 train_bottom_thickness = train_wall_thickness;
 
 // TRACK
@@ -82,6 +83,11 @@ track_height = 5;
 track_rail_width = 5;
 track_rail_height = 10;
 track_data_rail_mount_holes = 5;
+
+train_axel_block_diameter = 20;
+// train_axel_block_height = 8.7;
+train_axel_block_height = 8.74;
+
 
 
 $fn = 64;
@@ -116,7 +122,10 @@ train_lid_translation = [0,0,0];
 draw_train_wheel = false;
 train_wheel_translation = [0,0,0];
 
-draw_tracks = false;
+draw_train_axel_block = false;
+train_axel_block_translation = [0,0,0];
+
+draw_tracks = false; 
 track_translation = [0,0,0];
 
 if(draw_axel)
@@ -147,7 +156,8 @@ if(draw_motor_gear)
             motor_gear_together_built,
             axel_diameter,
             axel_length,
-            axel_fitting
+            axel_fitting,
+            5
             );
     }
     echo("Bevel Gear Pair with Axel cutout rendered");
@@ -179,7 +189,8 @@ if(draw_motor_bogie)
             bogie_height,
             bogie_wall_width,
             axel_diameter_outer,
-            true
+            true,
+            bogie_wheel_axel_distance
             );
     }
     echo("Motor Bogie rendered");
@@ -193,7 +204,8 @@ if(draw_switch_bogie)
             bogie_length,
             bogie_height,
             bogie_wall_width,
-            true
+            true,
+            bogie_wheel_axel_distance
             );
     }
 }
@@ -219,7 +231,7 @@ if(draw_bogie_lid)
 
 if(draw_train)
 {
-    enable_sides = false;
+    enable_sides = true;
     translate(train_translation) {
         train(
             bogie_width,
@@ -274,6 +286,21 @@ if(draw_train_wheel)
         );
     }
     echo("Wheel rendered");
+}
+
+module motor_gear_block(block_diameter, block_height, axel_diameter, axel_length, axel_fitting) {   
+    difference() {
+        cylinder(d=block_diameter,h=block_height);
+        Axel3(axel_diameter,axel_length,axel_fitting);
+    }
+}
+
+if(draw_train_axel_block)
+{
+    translate(train_axel_block_translation) {
+        motor_gear_block(train_axel_block_diameter,train_axel_block_height,axel_diameter,axel_length,axel_fitting);
+    }
+    echo("Motor axel block");
 }
 
 if(draw_tracks)

@@ -8,7 +8,7 @@ bogie_height,
 bogie_wall_width,
 at_center
 */
-module motor_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,axel_diameter_outer,at_center) {
+module motor_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,axel_diameter_outer,at_center, wheel_axel_distance) {
   difference() {
     minkowski() {
       cube([bogie_width, bogie_length, bogie_height], center=at_center);
@@ -24,11 +24,11 @@ module motor_bogie(bogie_width,bogie_length,bogie_height,bogie_wall_width,axel_d
         cube([bogie_width-bogie_wall_width+6, bogie_length-bogie_wall_width+6, 15], center=at_center);
       }
 
-      translate([0, 30, -5]) {
+      translate([0, wheel_axel_distance, -5]) {
         drive_axle(axel_diameter_outer);
       }
 
-      translate([0, -30, -5]) {
+      translate([0, -wheel_axel_distance, -5]) {
         drive_axle(axel_diameter_outer);
     }
   }

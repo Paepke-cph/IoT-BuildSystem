@@ -39,18 +39,18 @@ module train(
   // Creating bottom of train, and 2 x "lady-parts" ;-)
   difference() {
     cube(size=[train_length,train_width,train_bottom_thickness], center=at_center);
-    translate([(train_length/2)-(bogie_length/2+0.5),0,0]){
+    translate([(train_length/2)-(bogie_length/3+0.5),0,0]){
       cylinder(h=train_bottom_thickness+1, r = lid_connector_radius_outer, center=at_center);
     }
-    translate([(-train_length/2)-(-bogie_length/2+0.5),0,0]){
+    translate([(-train_length/2)-(-bogie_length/3+0.5),0,0]){
       cylinder(h=train_bottom_thickness+1, r = lid_connector_radius_outer, center=at_center);
     }
-    translate([(train_length/2)-(bogie_length/2+0.5),0,-9]){
+    translate([(train_length/2)-(bogie_length/3+0.5),0,-9]){
       rotate([180,0,0]) {
         cylinder(h=lid_connector_depth, r=lid_connector_radius_outer+1,center=at_center);
       }
     }
-    translate([(-train_length/2)-(-bogie_length/2+0.5),0,-9]){
+    translate([(-train_length/2)-(-bogie_length/3+0.5),0,-9]){
       rotate([180,0,0]) {
         cylinder(h=lid_connector_depth, r=lid_connector_radius_outer+1,center=at_center);
       }
@@ -83,12 +83,12 @@ module train(
         rotate([0, 0, 90]) {
           cube([train_width,train_wall_thickness,train_height], center=at_center);
         }
-        translate([-10, -5, ((train_height/2)-12)-(train_height/2)-5]) {
-          #cube([20,12,12]);
-        }
-        translate([-10, -35, ((train_height/2)-13)-(train_height/2)-5]) {
-          #cube([20,13,13]);
-        }
+        // translate([-10, -5, ((train_height/2)-12)-(train_height/2)-5]) {
+        //   #cube([20,12,12]);
+        // }
+        // translate([-10, -35, ((train_height/2)-13)-(train_height/2)-5]) {
+        //   #cube([20,13,13]);
+        // }
       }
     }
   }

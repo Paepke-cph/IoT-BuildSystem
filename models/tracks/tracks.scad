@@ -21,9 +21,11 @@ module wheel_track(track_width, track_length, track_height, axel_width, rail_wid
     base(track_length,track_width,track_height,at_center);
     translate([0,0,(track_height/2) + rail_height-(rail_height/4)]) {
         translate([rail_tip_width-rail_tip_width-0.2,axel_width/2-(rail_width/4),0]) {
+                color("red") translate([-(track_length/2)+0.225,(rail_width/2)-2.5,0]) cube([track_length,2.5,5]);
             rail(modul,track_length,rail_width,rail_height,rail_pressure_angle,rail_helix_angle);
         }
         translate([rail_tip_width-rail_tip_width-0.2,-axel_width/2+(rail_width/4),0]) {
+            color("red") translate([-(track_length/2)+0.225,-(rail_width/2),0]) cube([track_length,2.5,5]);
             rail(modul,track_length,rail_width,rail_height,rail_pressure_angle,rail_helix_angle);
         }
     }
