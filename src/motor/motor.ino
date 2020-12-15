@@ -7,4 +7,10 @@ void setup() {
   pinMode(PWMA, OUTPUT);
 }
 void loop() {
+  digitalWrite(PWMA, HIGH);
+  digitalWrite(DIRA, LOW);
+  delay(5000);
+  digitalWrite(PWMA, LOW);
+  digitalWrite(DIRA,LOW);
+  delay(5000);
 }
