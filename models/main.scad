@@ -9,7 +9,9 @@ use <train\train_bogie_lid.scad>
 use <train\trainprototype.scad>
 use <train\train_lid.scad>
 use <train\bogie_with_switches_proto.scad>
+
 use <tracks\tracks.scad>
+use <tracks\data-signal.scad>
 
 //* ============================================
 //* VARIABLEs
@@ -31,7 +33,7 @@ motor_gear_together_built=false;
 
 // WHEELS
 train_wheel_teeth = 55;
-train_wheel_width = 6;
+train_wheel_width = 8;
 train_wheel_bore = -55;
 train_wheel_pressure_angle = 20;
 train_wheel_helix_angle = 0;
@@ -68,7 +70,7 @@ lid_connector_radius_inner = 2;
 lid_connector_depth = 15;
 
 // TRAIN
-train_length = 180;
+train_length = 200;
 train_width = 60;
 train_height = 20;
 train_wall_thickness = 5;
@@ -107,7 +109,7 @@ motor_mount_translation = [0,0,0];
 draw_motor_bogie = false;
 motor_bogie_translation = [0,0,0];
 
-draw_switch_bogie = true;
+draw_switch_bogie = false;
 switch_bogie_translation = [0,0,0];
 
 draw_bogie_lid = false;
@@ -119,7 +121,7 @@ train_translation = [0,0,0];
 draw_train_lid = false;
 train_lid_translation = [0,0,0];
 
-draw_train_wheel = false;
+draw_train_wheel = true;
 train_wheel_translation = [0,0,0];
 
 draw_train_axel_block = false;
@@ -128,11 +130,14 @@ train_axel_block_translation = [0,0,0];
 draw_tracks = false; 
 track_translation = [0,0,0];
 
+draw_data_signal = false;
+data_signal_translation = [0,0,0];
+
 if(draw_axel)
 {
     translate(axel_translation){
         Axel3Print(
-            axel_diameter,
+            axel_diameter-0.5,
             axel_length,
             axel_fitting
             );
@@ -321,4 +326,12 @@ if(draw_tracks)
         );
     }
     echo("Track rendered");
+}
+
+if(draw_data_signal)
+{
+    test = [false,true,true,true,true,true,true,true,true];
+    translate(data_signal_translation) {
+        data_signal(track_length,track_data_rail_mount_holes-0.4,0,test,true);
+    }
 }
